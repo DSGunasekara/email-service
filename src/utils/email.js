@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const sendMail = async(order)=>{
+const sendMail = async(email, subject, message)=>{
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -14,39 +14,15 @@ const sendMail = async(order)=>{
         },
       });
 
-      let message = (
-        '<h1> Your order is on the way</h1>' +
-        '<table style="border: 1px solid #333; width: 100%; border-collapse: collapse;">' +
-        '<thead>' +
-        '<th> Item Name </th>' +
-        '<th> Location </th>'  +
-        /*...*/
-        '</thead>'
-      ); 
-      let orders = order.items
-      //map through the orders
-      for(const order of orders) {
-         message += (
-           '<tr style="text-align: center;">' +
-            '<td>' + order.item.ItemName + '</td>' +
-            '<td>' + order.item.seller.address + '</td>' +
-            /*...*/
-          '</tr>'
-         );
-      }
-      
-      message +=  '</table>';
-      
-      message += `<br><h3> You will recive your order soon</h3>`
-
   
       //Send email with the message
       let info = await transporter.sendMail({
-        from: `"Delivery Service" <12imashaashini@gmail.com>`, // sender address
-        to: order.customer.email, // reciever email
-        subject: "Delivery Message", // Subject line
+        from: `"E Commerce" ${process.env.EMAIL}`, // sender address
+        to: email, // reciever email
+        subject: subject, // Subject line
         html: message
       });
+      console.log(info);
 }
 
 export default sendMail;
