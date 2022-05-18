@@ -18,7 +18,7 @@ spec:
       - name: email-service
         image: adsg3160/email-service
         ports:
-        - containerPort: 8070
+        - containerPort: 8071
 ---
 apiVersion: v1
 kind: Service
@@ -30,5 +30,5 @@ spec:
   type: LoadBalancer  
   ports:
     - protocol: TCP
-      port: 8070
-      targetPort: 8070
+      port: 8071
+      targetPort: 8071
